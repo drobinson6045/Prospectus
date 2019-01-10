@@ -1,0 +1,74 @@
+%% LyX 2.2.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[12pt,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\PassOptionsToPackage{normalem}{ulem}
+\usepackage{ulem}
+\usepackage{babel}
+\begin{document}
+
+\section{Introduction}
+
+alsdkjf
+
+\section{Interface Tracking Model}
+
+Wildfires are multiscale systems with complex dynamics and feedback
+mechanisms, making it difficult to capture all of their characteristics.
+Physics based models, such as HIGRAD/FIRETEC {[}4{]} (H/F), model
+the fluid dynamics, the fire-atmosphere interaction, and the chemical
+processes (pyrolysis) of fires. These models can simulate a wide range
+of conditions but have large computational requirements, making them
+unviable as an operational model. This project aims to cast the modeling
+of fire as an interface tracking problem where a fireline will be
+represented as either a single closed curve (entire interior burning)
+,$\Gamma_{0}$, or as an outer fireline with one or multiple inner
+firelines (regions of exhausted or unburnt fuel), $\Gamma_{i}$ for
+$i\geq1$. The firelines, $\Gamma_{i},$ represent the isotherm encapsulating
+the heavy burning regime. This is a non-local and semi-empirical model
+where normal velocities, $\vec{v_{n}},$ are derived from a combination
+of heat flux from combustion, convective sinks, and fire-atmosphere
+interactions. 
+
+\subsection{Heat Flux}
+
+The heat flux is calculated as an integral over the area of the enclosed
+burning region. 
+
+\subsection{Fire-Atmosphere Interactions}
+
+The fire-atmosphere interactions will be determined by coupling the
+Weather Research and Forecasting (WRF) model {[}5{]} with the changes
+in air pressure resulting from heat flux. All quantities calculated
+along the interface are done in Fourier space, resulting in minimal
+computational cost and high-order accuracy. Parameters for the model
+will be determined through Bayesian Inference with the Delayed Rejection
+Adaptive Metropolis (DRAM) algorithm {[}1{]} using data collected
+from experiments carried out at Tall Timbers Research Station (TT)
+and model runs from H/F. Other factors that need further consideration
+are merging of fronts and fuel bed properties. \textbf{\small{}The
+goal is to create an operational wildland fire model that captures
+fireline behaviors that have been observed in other models and experiments
+at a much smaller computational cost. }{\small \par}
+
+\textbf{\uline{Intellectual Merit}}\textbf{:} A numerical issue
+with modeling a fireline as a moving interface is the distortion of
+the mesh as the interface moves. This leads to a varying spatial resolution
+and can cause tangling and instabilities. By introducing a tangential
+velocity component {[}2{]} it is guaranteed that points remain equispaced
+in arclength without affecting the shape of the interface (Figure
+\ref{lTheta}). With this formulation, a well-behaved mesh is attained
+and a large number of stable timesteps can be taken. This framework
+makes this model a novel approach to modeling wildfires.
+
+\section{Model Fitting}
+
+\section{SARndbox}
+
+\section{Conclusion}
+\end{document}

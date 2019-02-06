@@ -83,7 +83,37 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Testing 123
+
+\series bold
+\size small
+The goal is to create an operational wildland fire model that captures fireline
+ behaviors that have been observed in other models and experiments at a
+ much smaller computational cost.
+ 
+\end_layout
+
+\begin_layout Standard
+Wildfires are multiscale systems with complex dynamics and feedback mechanisms,
+ making it difficult to capture all of their characteristics.
+ Physics based models, such as HIGRAD/FIRETEC 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "linn1997firetec"
+
+\end_inset
+
+ (H/F), model the fluid dynamics, the fire-atmosphere interaction, and the
+ chemical processes (pyrolysis) of fires.
+ These models can simulate a wide range of conditions but come with large
+ computational costs and highly complex initialization.
+ This means these models do not lend themselves to be used for exploring
+ the development of a fire under slightly varying conditions without a considera
+ble investment of time.
+ Current operational fire models, used to forecast development of active
+ fires, are mostly based off the Rothermel spread model, an empirical model
+ originally developed in 1972.
+ The Rothermel model has The aim of this research is to develop models that
+ are 
 \end_layout
 
 \begin_layout Section
@@ -91,16 +121,9 @@ Interface Tracking Model
 \end_layout
 
 \begin_layout Standard
-Wildfires are multiscale systems with complex dynamics and feedback mechanisms,
- making it difficult to capture all of their characteristics.
- Physics based models, such as HIGRAD/FIRETEC [4] (H/F), model the fluid
- dynamics, the fire-atmosphere interaction, and the chemical processes (pyrolysi
-s) of fires.
- These models can simulate a wide range of conditions but have large computation
-al requirements, making them unviable as an operational model.
- This project aims to cast the modeling of fire as an interface tracking
- problem where a fireline will be represented as either a single closed
- curve (entire interior burning) ,
+We cast the modeling of fire as an interface tracking problem where a fireline
+ is represented as either a single closed curve (entire interior burning)
+ ,
 \begin_inset Formula $\Gamma_{0}$
 \end_inset
 
@@ -114,84 +137,1084 @@ al requirements, making them unviable as an operational model.
 \end_inset
 
 .
+ We assume that any burning section of fuel can be encapsulated with a somewhat
+ smooth continuous curve.
  The firelines, 
 \begin_inset Formula $\Gamma_{i},$
 \end_inset
 
- represent the isotherm encapsulating the heavy burning regime.
- This is a non-local and semi-empirical model where normal velocities, 
-\begin_inset Formula $\vec{v_{n}},$
+ represent the isotherm encapsulating the area where steady combustion of
+ fuel is taking place, 
+\begin_inset Formula $\Omega$
 \end_inset
 
- are derived from a combination of heat flux from combustion, convective
- sinks, and fire-atmosphere interactions.
+.
  
 \end_layout
 
+\begin_layout Standard
+We considered three drivers for determing spread rate.
+ The first being the heat flux of combusting fuel.
+ As fuel combusts it releases radiation that heats surrounding fuel to ignition
+ temperature, which varies and ranges from (NEED CITATION AND VALUES).
+ This radiation dries out surrounding fuel and allows for combustion to
+ take place, allowing the fire to spread.
+ The heat from wildfires raises the temperature of the surrounding air causing
+ it to rise(NEED CITATION AND VALUES).
+ These buoyant updrafts pull in surrounding air at the ground level that
+ result in a vacuum effect, restraining the spread of the fireline.
+ The radiation received by fuels is unimpeded by the wind so we considered
+ these factors separately.
+ Lastly, we account for the background wind speed that is typically always
+ present in the event of a wildfire.
+\end_layout
+
+\begin_layout Standard
+The fireline model represents the fire dynamics in terms of a normal velociy,
+ 
+\begin_inset Formula $\frac{\partial\vec{x}}{\partial t}=V_{n}\hat{n},$
+\end_inset
+
+ where 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ is a parameterization of a fireline in 
+\begin_inset Formula $\mathbb{R}^{2}$
+\end_inset
+
+, and 
+\begin_inset Formula $\hat{n}$
+\end_inset
+
+ is the outward unit normal of this interface.
+ The normal velocity
+\begin_inset Formula $V_{n}$
+\end_inset
+
+ is represented as the weighted sum from three of the dominating sources
+ of fire spread:
+\begin_inset Formula 
+\begin{align*}
+V_{n}(\vec{x}) & =\lambda_{1}v_{bg}(\vec{x})+\lambda_{2}v_{F}(\vec{x})+\lambda_{3}v_{Sink}(\vec{x}).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename C:/Users/David/FSU/Manna/DomainSchem.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The spread due to the heat flux of burning fuel is denoted by 
+\begin_inset Formula $v_{F}$
+\end_inset
+
+, the convective sinks caused by updrafts are represented by 
+\begin_inset Formula $v_{Sink}$
+\end_inset
+
+, and the ambient background wind near the ground is represented by 
+\begin_inset Formula $v_{bg}$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection
+Dynamics
+\end_layout
+
+\begin_layout Subsubsection
 Heat Flux
 \end_layout
 
 \begin_layout Standard
-The heat flux is calculated as an integral over the area of the enclosed
- burning region.
+For the transfer of heat from a source we follow the inverse square law.
+ To determine the total heat flux at a single point on the interface we
+ integrate over the enclosed area of the interface.
  
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v_{F}(\vec{x})=\int_{\Omega}\frac{1}{\sqrt{\left\Vert \vec{x}-\vec{y}\right\Vert ^{2}+\epsilon^{2}}}dA
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For this project we originally focused on fires with one interior fireline.
+ With only one interior fireline the integral can be approximated by determining
+ the width ,
+\begin_inset Formula $w_{i}$
+\end_inset
+
+, of the burning region between the inner and outer fireline at each discretizat
+ion point.
+ The width is defined as the distance between a point on the outer fireline
+ and the closest point on the inner fireline.
+ The closest point is determined by doing a few Newtons method iterations
+ in Fourier space
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Should i explain this further?
+\end_layout
+
+\end_inset
+
+ to find the 
+\begin_inset Formula $\alpha_{i}$
+\end_inset
+
+ where 
+\begin_inset Formula $\partial\left(\Gamma_{0}^{i}-\Gamma_{1}\right)/\partial\alpha=0$
+\end_inset
+
+ that is nearest to 
+\begin_inset Formula $i\frac{2\pi}{N}$
+\end_inset
+
+ where 
+\shape italic
+N
+\shape default
+ is the number of discretization points.
+ With the corresponding alpha the FFT weights are used to return back to
+ physical space by summing the corresponding exponentials.
+ With the nearest interior points determined we also define the midpoints,
+ 
+\begin_inset Formula $y_{i},$
+\end_inset
+
+ as the halfway point between the outer point and its associated nearest
+ interior point.
+ These points will be used as the source locations for calculating the effect
+ of the convective sinks.
+\end_layout
+
+\begin_layout Standard
+INSERT GRAPHIC OF NEAREST NEIGHBOR RESULTS AND POINTS
+\end_layout
+
+\begin_layout Standard
+The heat flux can now be calculated as a line integral along the outer fireline
+ using the width to calculate the area of the enclosed burning region.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v_{F}(\vec{x})=\ointop_{\Gamma_{0}}\frac{w(\vec{y})}{\sqrt{\left\Vert \vec{x}-\vec{y}\right\Vert ^{2}+\epsilon^{2}}}d\vec{s}\,\,\text{for}\,\vec{y}\in\Gamma_{0}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This integral is calculated by first determing 
+\shape italic
+ds
+\shape default
+ by taking the spectral derivative of the outer interface.
+ The guaranteed periodicity of the interface means we can calculate its
+ derivatives in Fourier space making the calculation trivial and spectrally
+ accurate
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Explain this in more detail?
+\end_layout
+
+\end_inset
+
+.
+ Given we can express a function as the sum of complex exponentials using
+ the discrete Fourier transform (DFT)
+\begin_inset Formula 
+\[
+f(x)\simeq\sum_{-N/2}^{N/2}\hat{f}_{k}e^{ikx}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\hat{f}_{k}$
+\end_inset
+
+ are the weights given by the DFT.
+ The derivative can be easily approximated by scaling the weights by 
+\shape italic
+ik
+\shape default
+ and taking the inverse Fourier Transform (IFT) since
+\begin_inset Formula 
+\[
+g(x)=\frac{df}{dx}\simeq\sum_{-N/2}^{N/2}ik\hat{f}_{k}e^{ikx}\Longrightarrow\hat{g}_{k}=ik\hat{f}_{k}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using the spectral derivative we can easily approximate 
+\begin_inset Formula $d\vec{s}=\sqrt{\left(\frac{dx}{d\alpha}\right)^{2}+\left(\frac{dy}{d\alpha}\right)^{2}}\hat{\tau},$
+\end_inset
+
+ where 
+\begin_inset Formula $\Gamma_{0}=\left(x(\alpha),y(\alpha)\right)$
+\end_inset
+
+, and sum to approximate the integral
+\begin_inset Formula 
+\[
+v_{F}(\vec{x}_{j})=\sum_{i=0}^{N-1}\frac{w(\alpha_{i})*ds_{i}*\left(2\pi/N\right)}{\sqrt{\left\Vert \vec{x}_{j}-\vec{y_{i}}\right\Vert ^{2}+\epsilon^{2}}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
 Fire-Atmosphere Interactions
 \end_layout
 
 \begin_layout Standard
-The fire-atmosphere interactions will be determined by coupling the Weather
- Research and Forecasting (WRF) model [5] with the changes in air pressure
- resulting from heat flux.
- All quantities calculated along the interface are done in Fourier space,
- resulting in minimal computational cost and high-order accuracy.
- Parameters for the model will be determined through Bayesian Inference
- with the Delayed Rejection Adaptive Metropolis (DRAM) algorithm [1] using
- data collected from experiments carried out at Tall Timbers Research Station
- (TT) and model runs from H/F.
- Other factors that need further consideration are merging of fronts and
- fuel bed properties.
- 
-\series bold
-\size small
-The goal is to create an operational wildland fire model that captures fireline
- behaviors that have been observed in other models and experiments at a
- much smaller computational cost.
+To model the effects of buoyant updrafts we considered a DONT KNOW WHAT
+ TO CALL IT.
  
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-\bar under
-Intellectual Merit
-\bar default
-:
-\series default
- A numerical issue with modeling a fireline as a moving interface is the
- distortion of the mesh as the interface moves.
- This leads to a varying spatial resolution and can cause tangling and instabili
-ties.
- By introducing a tangential velocity component [2] it is guaranteed that
- points remain equispaced in arclength without affecting the shape of the
- interface (Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lTheta"
+\begin_inset Formula 
+\[
+v_{Sink}(\vec{x})=-\sum_{i=1}^{N}w(\vec{y}_{i})\frac{\vec{x}-\vec{y}_{i}}{\left\Vert \vec{x}-\vec{y}_{i}\right\Vert ^{2}}\cdot\hat{n}
+\]
 
 \end_inset
 
-).
- With this formulation, a well-behaved mesh is attained and a large number
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 17
+placement O
+overhang 0in
+width "55col%"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width ""
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/CannfieldSinks.PNG
+	lyxscale 20
+	height 12.75pheight%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/sinkBoth.png
+	lyxscale 20
+	height 13pheight%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+small
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+A comparison of streamlines from a HIGRAD/FIRETEC 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "linn1997firetec"
+
+\end_inset
+
+ high-fidelity simulation (left) and streamlines from the interface model
+ (right).
+ The streamlines of the convective sinks are plotted in gray and the streamlines
+ of 
+\begin_inset Formula $\lambda_{1}\vec{v}_{bg}+\lambda_{3}\vec{v}_{sink}$
+\end_inset
+
+ 
+\begin_inset Formula $\left(\lambda_{1}=26.6;\lambda_{3}=1.0\right)$
+\end_inset
+
+ are plotted in blue.
+ This figure demonstrates that with proper scaling of the convective sink
+ strength a similar velocity field to a high-fidelity model can be attained.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The larger a burning region the greater the heat released from combustion,
+ resulting in a stonger convective plume.
+ For a fire with only a single interior fireline the width is used as a
+ way to scale the convective sinks.
+ The sum of all of these sinks with their strength, also scaled by distance,
+ forms the convective sink contribution to the interface velocity.
+ For firelines with multiple interior lines a Delauney triangulation was
+ used to mesh the interior burning region.
+ The centers were used as the sink locations and their strength scaled up
+ by the corresponding triangles area.
+ The sum over these triangles and the same 
+\begin_inset Formula $r^{-1}$
+\end_inset
+
+ distance scaling was used to form the convective sink velocity contribution
+ in these cases.
+\end_layout
+
+\begin_layout Subsection
+Stability
+\end_layout
+
+\begin_layout Standard
+A numerical issue with modeling a fireline as a moving interface is the
+ distortion of the mesh as the interface moves.
+ This leads to a varying spatial resolution and can cause tangling and instabili
+ties.
+ By using methods for curvature driven flow
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hou1994Ltheta"
+
+\end_inset
+
+ a tangential velocity component is introduced that guarantees points remain
+ equispaced in arclength without affecting the shape of the interface (Figure
+ ).
+ With this formulation, a well-behaved mesh is attained and a larger number
  of stable timesteps can be taken.
- This framework makes this model a novel approach to modeling wildfires.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+L-
+\begin_inset Formula $\theta$
+\end_inset
+
+ Formulation
+\end_layout
+
+\begin_layout Standard
+With 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ given by 
+\begin_inset Formula $X=\left(x\left(\alpha,t\right),y\left(\alpha,t\right)\right)$
+\end_inset
+
+ a tangential velocity, 
+\begin_inset Formula $v_{s},$
+\end_inset
+
+ is introduced to keep the points along the intereface equispaced in arclength;
+ 
+\begin_inset Formula $X_{t}=v_{n}\hat{n}\rightarrow X_{t}=v_{n}\hat{n}+v_{s}\hat{s}$
+\end_inset
+
+, where 
+\begin_inset Formula $\hat{s}$
+\end_inset
+
+ is the unit tangent vector.
+ To do this a switch of parameterization of 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ from 
+\shape italic
+x
+\shape default
+ and 
+\shape italic
+y
+\shape default
+ to the tangent angle, 
+\begin_inset Formula $\theta,$
+\end_inset
+
+ and arclength 
+\shape italic
+s
+\shape default
+, more specifically 
+\begin_inset Formula $\frac{\partial s}{\partial\alpha}$
+\end_inset
+
+.
+ With curvature driven flow 
+\begin_inset Formula $v_{n}=\kappa=\theta_{\alpha}/s_{\alpha}$
+\end_inset
+
+ we can express the evolution of the curve in terms of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{\alpha}$
+\end_inset
+
+via
+\begin_inset Formula 
+\begin{equation}
+s_{\alpha t}=\left(v_{s}\right)_{\alpha}-\frac{1}{s_{\alpha}}\theta_{\alpha}^{2}\label{eq:sAlphaT}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\theta_{t}=\frac{1}{s_{\alpha}}\left(\frac{1}{s_{\alpha}}\theta_{\alpha}\right)_{\alpha}+\frac{v_{s}}{s_{\alpha}}\theta_{\alpha}.\label{eq:thetaT}
+\end{equation}
+
+\end_inset
+
+ We can see that Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:thetaT"
+
+\end_inset
+
+ is an advection-diffusion equation with stability condition 
+\begin_inset Formula $\Delta t<C\cdot\left(\bar{s_{\alpha}}h\right)^{2}$
+\end_inset
+
+where 
+\begin_inset Formula $\bar{s_{\alpha}=\min_{\alpha}s_{\alpha}}$
+\end_inset
+
+ and 
+\shape italic
+h
+\shape default
+ is the grid spacing in 
+\begin_inset Formula $\alpha.$
+\end_inset
+
+ The stiffness of the problem comes through Eq.
+ (2) which can be dealt with by ensuring 
+\begin_inset Formula $s_{\alpha}$
+\end_inset
+
+ doesn't depend on 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ To achieve this enforce that 
+\begin_inset Formula $\frac{ds}{d\alpha}$
+\end_inset
+
+ be everywhere equal to its mean
+\begin_inset Formula 
+\[
+s_{\alpha}(\alpha,t)=\frac{1}{2\pi}\int_{0}^{2\pi}s_{\alpha'}\left(\alpha^{'},t\right)d\alpha'=\frac{1}{2\pi}L(t)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $L(t)$
+\end_inset
+
+ is the total length of the interface 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $s_{\alpha}$
+\end_inset
+
+ initially satisfies this constraint then 
+\begin_inset Formula 
+\[
+v_{s}(\alpha,t)=v_{s}(0,t)+\frac{2\pi}{L}\int_{0}^{\alpha}\theta_{\alpha'}^{2}d\alpha'-\frac{\alpha}{L}\int_{0}^{2\pi}\theta_{\alpha'}^{2}d\alpha',
+\]
+
+\end_inset
+
+ resulting from IDONTKNOW, maintains the constraint in time.
+ The tangential velocity 
+\begin_inset Formula $v_{s}(0,t)$
+\end_inset
+
+ is an arbitrary change of frame and can simply be set to zero.
+ Now 
+\begin_inset Formula $s_{\alpha}$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and evolves with the length of the curve 
+\shape italic
+L
+\shape default
+.
+ Eqn.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:sAlphaT"
+
+\end_inset
+
+ now becomes an ODE for 
+\shape italic
+L
+\shape default
+ and we now have 
+\begin_inset Formula 
+\begin{equation}
+L_{t}=-\frac{1}{L}\int_{0}^{2\pi}\theta_{\alpha'}^{2}d\alpha'\label{eq:Lt'}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\theta_{t}=\left(\frac{2\pi}{L}\right)^{2}\theta_{\alpha\alpha}+\frac{2\pi}{L}v_{s}\theta_{\alpha}.\label{eq:thetaT'}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Substituting the curvature equation and it's derivative with respect to
+ 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ into Eqns.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Lt'"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:thetaT'"
+
+\end_inset
+
+ and using the restriction 
+\begin_inset Formula $\int_{0}^{2\pi}s_{\alpha'}\left(\alpha^{'},t\right)d\alpha'=L(t)$
+\end_inset
+
+ we can express our interface evolution in terms of the normal velocity
+ CITE MOORE
+\begin_inset Formula 
+\begin{equation}
+L_{t}=-\int_{0}^{2\pi}v_{n}\theta_{\alpha'}d\alpha'\label{eq:FinalLt}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\theta_{t}=\frac{2\pi}{L}\left(v_{n}\right)_{\alpha}+\frac{2\pi}{L}v_{s}\theta_{\alpha}.\label{eq:FinalthetaT}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now 
+\begin_inset Formula $v_{n}$
+\end_inset
+
+ can be formed using the methods described above section and with Eqns.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:FinalLt"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:FinalthetaT"
+
+\end_inset
+
+ the discretization points can be kept equispaced in arclength.
+ Since we are now keeping track of opening angle and length we need to track
+ a reference point in cartesian space to account for translations of the
+ interface.
+ For this we track the surface mean 
+\begin_inset Formula $\left\langle X\right\rangle $
+\end_inset
+
+ which moves according to 
+\begin_inset Formula 
+\[
+\left\langle X\right\rangle _{t}=\left\langle v_{n}\hat{n}+v_{s}\hat{s}\right\rangle 
+\]
+
+\end_inset
+
+which is tracked using forward Euler
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Explain this in more detail?
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 17
+placement O
+overhang 0in
+width "55col%"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width ""
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/noTheta.PNG
+	lyxscale 20
+	width 20page%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/Theta.PNG
+	lyxscale 20
+	width 20page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+small
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Snapshots of two moving interfaces initialized with the same shape and forcing.
+ The left interface has no tangential velocity component and the right interface
+ has the tangential velocity implemented [2].
+ Notice that the right interface has the same shape as the left and keeps
+ points equispaced in arclength.
+\begin_inset CommandInset label
+LatexCommand label
+name "lTheta"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
 Model Fitting
+\end_layout
+
+\begin_layout Standard
+The proposed model has unknown parameters that DRAM will identify.
+ The objective of DRAM is to start with a prescribed prior distribution
+ and then sample the parameter space to determine the posterior probability
+ density for each parameter.
+ This is done by updating the likelihood based on the error between the
+ model and data.
+ The DRAM algorithm will show correlations between parameters, shortcomings
+ of the model, and quantify uncertainty.
+ DRAM requires analysis of results and reinitialization to attain good stationar
+y posterior distributions.
+ Depending on the number of inferred parameters, the DRAM algorithm can
+ require a large amount of simulation runs to estimate these parameters,
+ and my previous experiences with HPC will prove useful.
+ In addition, the computational efficiency of this model makes it a natural
+ fit for DRAM.
+ 
+\end_layout
+
+\begin_layout Standard
+The error that was used for driving the model took three points from a head
+ fire high fidelity simulation from HIGRAD/FIRETEC shown in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "canfield2014numerical"
+
+\end_inset
+
+ which had the canonical parabolic fireline shape I was hoping to capture.
+ The initial fireline had a width (x domain) of 20m and a height (y domain)
+ of 100m, which was similar to initial conditions in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "canfield2014numerical"
+
+\end_inset
+
+ with a backing wind of 5 m/s in the positive x-direction.
+ The points used for the error were
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-30
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+544
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+*
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+55
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+with the * being a free x value.
+ Once a simulation was completed the min and max x values and max y values
+ were taken and compared with the three points above.
+ Since the initial fire line was initialized with its center being on the
+ x-axis with a background wind only in the x-direction the developing fireline
+ would be symmetric with respect to the x-axis as well as not drift upward.
+ This means that these points were a consistent error measurement.
+ 
+\end_layout
+
+\begin_layout Standard
+There have been many improvements but there seems to be, for lack of a better
+ term, forbidden regions.
+ There are combinations of 
+\begin_inset Formula $\lambda_{1},$
+\end_inset
+
+ 
+\begin_inset Formula $\lambda_{2},$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda_{3}$
+\end_inset
+
+ that cause high frequency modes developing and the interface breaks.
+ This is an obvious obstacle when using this model with DRAM since if a
+ model returns nonsensical results how does DRAM update the proposal distributio
+n? Another layer of difficulty is the fact that this code is written in
+ Python.
+ My solution for this was to put catch points in my code to detect when
+ the interface had become unstable.
+ When this happened the simulation was terminated and a number code was
+ returned instead of a result.
+ In DRAM whenever this code was received an error of 
+\begin_inset Formula $\infty$
+\end_inset
+
+ was returned, which the code is able to handle.
+ My initial fix for this was making modifications to a significant amount
+ of the DRAM code to have it resample until it received an actual result.
+ This caused the time to get samples to increase dramatically.
+ I was able to do 200 runs over a 2 day period which is a completely inadequate
+ amount of samples to be able to do any sort of analysis.
+ By making the above change I was able to do 1,000 runs in a 1 day period.
+ All of these runs returned dissappointing results, although, there is some
+ knowledge gained from using DRAM with this model.
+\end_layout
+
+\begin_layout Standard
+RESULTS
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename figures/chains1000.png
+	lyxscale 20
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Luckily this is the one that produced some possible information about the
+ model.
+ From the bottom right plot we can see that there seems to be an area where
+ DRAM cannot sample.
+ Taking a points from this graph and fitting a line along the bottom region
+ I arrived at an expression of 
+\begin_inset Formula 
+\[
+13.846\lambda_{2}-\lambda_{3}\geq207.6
+\]
+
+\end_inset
+
+for the bottom region.
+ Running my simulation with parameters satisfying this did in fact cause
+ the simulation to break.
+ Taking 
+\begin_inset Formula $\lambda_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda_{2}$
+\end_inset
+
+ factors from the upperleft plot and taking the satisfying the negative
+ of the above expression resulted in simulations that ran the full time
+ and didn't break.
+ Sadly the simulation runs resulting from the sampling means are not realistic.
+ The final shape of the resulting fireline does in fact have its width around
+ the right scale of the data points but it's height is much too large, ~200m.
+ At least a rough constraint for stability for the model was able to be
+ realized.
+ This exercise definitely has shown that much more foresight needs to be
+ used in order to utilize an MCMC sampling algorithm efficiently.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "C:/Users/David/References"
+options "plain"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section

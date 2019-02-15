@@ -207,7 +207,7 @@ V_{n}(\vec{x}) & =\lambda_{1}v_{bg}(\vec{x})+\lambda_{2}v_{F}(\vec{x})+\lambda_{
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename C:/Users/David/FSU/Manna/DomainSchem.png
+	filename figures/DomainSchem.png
 	lyxscale 20
 	width 60text%
 
@@ -820,57 +820,8 @@ L_{t}=-\int_{0}^{2\pi}v_{n}\theta_{\alpha'}d\alpha'\label{eq:FinalLt}
 \end_layout
 
 \begin_layout Standard
-Now 
-\begin_inset Formula $v_{n}$
-\end_inset
-
- can be formed using the methods described above section and with Eqns.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:FinalLt"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:FinalthetaT"
-
-\end_inset
-
- the discretization points can be kept equispaced in arclength.
- Since we are now keeping track of opening angle and length we need to track
- a reference point in cartesian space to account for translations of the
- interface.
- For this we track the surface mean 
-\begin_inset Formula $\left\langle X\right\rangle $
-\end_inset
-
- which moves according to 
-\begin_inset Formula 
-\[
-\left\langle X\right\rangle _{t}=\left\langle v_{n}\hat{n}+v_{s}\hat{s}\right\rangle 
-\]
-
-\end_inset
-
-which is tracked using forward Euler
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Explain this in more detail?
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
 \begin_inset Wrap figure
-lines 17
+lines 18
 placement O
 overhang 0in
 width "55col%"
@@ -940,18 +891,23 @@ small
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Snapshots of two moving interfaces initialized with the same shape and forcing.
+Snapshots of two moving interfaces initialized as a unit circle centered
+ at the origin with 
+\begin_inset Formula $\vec{v}_{n}(t)=y\hat{n}$
+\end_inset
+
+.
  The left interface has no tangential velocity component and the right interface
- has the tangential velocity implemented [2].
+ has the tangential velocity implemented 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hou1994Ltheta"
+
+\end_inset
+
+.
  Notice that the right interface has the same shape as the left and keeps
  points equispaced in arclength.
-\begin_inset CommandInset label
-LatexCommand label
-name "lTheta"
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -962,10 +918,89 @@ name "lTheta"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Now 
+\begin_inset Formula $v_{n}$
+\end_inset
+
+ can be formed using the methods described above section and with Eqns.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:FinalLt"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:FinalthetaT"
+
+\end_inset
+
+ the discretization points can be kept equispaced in arclength.
+ Since we are now keeping track of opening angle and length we need to track
+ a reference point in cartesian space to account for translations of the
+ interface.
+ For this we track the surface mean 
+\begin_inset Formula $\left\langle X\right\rangle $
+\end_inset
+
+ which moves according to 
+\begin_inset Formula 
+\[
+\left\langle X\right\rangle _{t}=\left\langle v_{n}\hat{n}+v_{s}\hat{s}\right\rangle 
+\]
+
+\end_inset
+
+which is tracked using forward Euler
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Explain this in more detail?
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Show verification with just translation
+\end_layout
+
+\begin_layout Standard
+Can do error convergence for translation tracking (not necessary)
+\end_layout
+
+\begin_layout Standard
+Could have done optimization of streamline figure to determine lamda1 and
+ lamda2 using firetec results to get time evolution of lambdas(if they are
+ constant proceed)
 \end_layout
 
 \begin_layout Section
 Model Fitting
+\end_layout
+
+\begin_layout Standard
+In an effort to determine a limiting domain for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ values a Delayed-Rejection Adaptive-Metropolis Bayesian inference algorithm
+\begin_inset CommandInset citation
+LatexCommand cite
+key "haario2006dram"
+
+\end_inset
+
+ was used.
+ 
 \end_layout
 
 \begin_layout Standard

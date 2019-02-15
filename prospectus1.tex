@@ -80,7 +80,7 @@ V_{n}(\vec{x}) & =\lambda_{1}v_{bg}(\vec{x})+\lambda_{2}v_{F}(\vec{x})+\lambda_{
 \end{align*}
 
 \begin{center}
-\includegraphics[width=0.6\textwidth]{C:/Users/David/FSU/Manna/DomainSchem}
+\includegraphics[width=0.6\textwidth]{figures/DomainSchem}
 \par\end{center}
 
 The spread due to the heat flux of burning fuel is denoted by $v_{F}$,
@@ -257,6 +257,20 @@ L_{t}=-\int_{0}^{2\pi}v_{n}\theta_{\alpha'}d\alpha'\label{eq:FinalLt}
 \theta_{t}=\frac{2\pi}{L}\left(v_{n}\right)_{\alpha}+\frac{2\pi}{L}v_{s}\theta_{\alpha}.\label{eq:FinalthetaT}
 \end{equation}
 
+\begin{wrapfigure}[18]{O}{0.55\columnwidth}%
+\begin{centering}
+\fbox{\includegraphics[width=0.2\paperwidth]{figures/noTheta}\includegraphics[width=0.2\paperwidth]{figures/Theta}}
+\par\end{centering}
+\small
+
+\caption{Snapshots of two moving interfaces initialized as a unit circle centered
+at the origin with $\vec{v}_{n}(t)=y\hat{n}$. The left interface
+has no tangential velocity component and the right interface has the
+tangential velocity implemented \cite{hou1994Ltheta}. Notice that
+the right interface has the same shape as the left and keeps points
+equispaced in arclength.}
+\end{wrapfigure}%
+
 Now $v_{n}$ can be formed using the methods described above section
 and with Eqns. \ref{eq:FinalLt} and \ref{eq:FinalthetaT} the discretization
 points can be kept equispaced in arclength. Since we are now keeping
@@ -269,21 +283,19 @@ moves according to
 \]
 which is tracked using forward Euler\footnote{Explain this in more detail?}.
 
-\begin{wrapfigure}[17]{O}{0.55\columnwidth}%
-\begin{centering}
-\fbox{\includegraphics[width=0.2\paperwidth]{figures/noTheta}\includegraphics[width=0.2\paperwidth]{figures/Theta}}
-\par\end{centering}
-\small
+Show verification with just translation
 
-\caption{Snapshots of two moving interfaces initialized with the same shape
-and forcing. The left interface has no tangential velocity component
-and the right interface has the tangential velocity implemented {[}2{]}.
-Notice that the right interface has the same shape as the left and
-keeps points equispaced in arclength.\label{lTheta}}
-\end{wrapfigure}%
+Can do error convergence for translation tracking (not necessary)
 
+Could have done optimization of streamline figure to determine lamda1
+and lamda2 using firetec results to get time evolution of lambdas(if
+they are constant proceed)
 
 \section{Model Fitting}
+
+In an effort to determine a limiting domain for $\lambda$ values
+a Delayed-Rejection Adaptive-Metropolis Bayesian inference algorithm\cite{haario2006dram}
+was used. 
 
 The proposed model has unknown parameters that DRAM will identify.
 The objective of DRAM is to start with a prescribed prior distribution

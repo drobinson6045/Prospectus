@@ -14,6 +14,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{esint}
+\usepackage{todonotes}
 
 \makeatletter
 
@@ -434,7 +435,15 @@ Metropolis-Hastings(MH) in the Peskan absolute efficiency ordering.
 This means that DR obtains MCMC estimators that have a smaller asymptotic
 variance for every function \textit{f} whose expectation relative
 to $\pi$ we want to estimate (provided \textit{f} has finite variance
-under $\pi$)\cite{haario2006dram}.
+under $\pi$)~\cite{haario2006dram}.
+
+compound words get a hypen Ex.~a well-defined problem
+ranges get an en dash Ex.~according to equations (1)--(3)
+punctuation gets an em dash Ex.~some stuff---there is something---for
+which we 
+
+
+
 
 Both DR and AM are standalone modifications made to MCMC methods but
 complement eachother well. Putting these two together was shown to
@@ -470,7 +479,7 @@ data to fit this form so we can use Bayesian Inference using true
 values, which were used to form the data with some added Gaussian
 noise, and the inferred parameters, $\gamma_{i}',U_{0,i}',\omega_{i}'$
 at a given step to calculate an error to form the likelihood and make
-the next proposal. To test all of these methods I used a code 'MCMC
+the next proposal. To test all of these methods I used a code `MCMC
 toolbox' based on \cite{haario2006dram,haario2001adaptive} which
 can be found at 'http://helios.fmi.fi/\textasciitilde lainema/mcmc'.
 Like the example above I supply reasonable variances to both the $\gamma$
@@ -478,6 +487,7 @@ and $U_{0}$ proposals but I assign a very small variance to the $\omega$
 proposal distribution. This means that many proposals are rejected
 due to $\omega$ not being able to make large enough jumps when a
 new set of parameters is sampled.
+
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline 
@@ -551,11 +561,11 @@ the computational efficiency of this model makes it a natural fit
 for DRAM.
 
 The error that was used for driving the model took three points from
-a head fire high fidelity simulation from HIGRAD/FIRETEC shown in
-\cite{canfield2014numerical} which had the canonical parabolic fireline
+a head fire high fidelity simulation from HIGRAD/FIRETEC shown
+in~\cite{canfield2014numerical} which had the canonical parabolic fireline
 shape I was hoping to capture. The initial fireline had a width (x
 domain) of 20m and a height (y domain) of 100m, which was similar
-to initial conditions in \cite{canfield2014numerical} with a backing
+to initial conditions in~\cite{canfield2014numerical} with a backing
 wind of 5 m/s in the positive x-direction. The values used to form
 the error function are shown in Table \ref{tab:DRAMpoints}.\begin{wraptable}{o}{0.3\columnwidth}%
 \begin{centering}
@@ -605,7 +615,7 @@ any sort of analysis. By making the above change I was able to do
 results, although, there is some knowledge gained from using DRAM
 with this model.
 
-NEED BETTER RESULTS
+\todo[inline]{NEED BETTER RESULTS}
 \begin{center}
 \includegraphics[width=0.6\textwidth]{figures/chains1000}
 \par\end{center}

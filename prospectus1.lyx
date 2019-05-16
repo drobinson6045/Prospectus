@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -24,6 +24,8 @@ customHeadersFooters
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -53,6 +55,7 @@ customHeadersFooters
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -65,10 +68,13 @@ customHeadersFooters
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
-\paperpagestyle fancy
+\paperpagestyle plain
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -99,6 +105,7 @@ Wildfires are multiscale systems with complex dynamics and feedback mechanisms,
 \begin_inset CommandInset citation
 LatexCommand cite
 key "linn1997firetec"
+literal "true"
 
 \end_inset
 
@@ -202,14 +209,98 @@ V_{n}(\vec{x}) & =\lambda_{1}v_{bg}(\vec{x})+\lambda_{2}v_{F}(\vec{x})+\lambda_{
 \end_inset
 
 
-\end_layout
+\begin_inset Wrap figure
+lines 0
+placement R
+overhang 0in
+width "50col%"
+status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \align center
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width ""
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
 \begin_inset Graphics
 	filename figures/DomainSchem.png
-	lyxscale 20
-	width 60text%
+	lyxscale 30
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+small
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagram of an expanding fireline interface with a single inner and outer
+ fireline.
+ The burning region 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ is shaded in gray, normal velocity vectors in black, and the width, 
+\begin_inset Formula $w$
+\end_inset
+
+, defined as the shortest distance for a point on the exterior to a point
+ on the interior.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:InterfaceSchem"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
 
 \end_inset
 
@@ -353,7 +444,7 @@ Explain this in more detail?
  the discrete Fourier transform (DFT)
 \begin_inset Formula 
 \[
-f(x)\simeq\sum_{-N/2}^{N/2}\hat{f}_{k}e^{ikx}
+f(x)\simeq\sum_{k=-N/2+1}^{N/2}\hat{f}_{k}e^{ikx}
 \]
 
 \end_inset
@@ -370,7 +461,7 @@ ik
  and taking the inverse Fourier Transform (IFT) since
 \begin_inset Formula 
 \[
-g(x)=\frac{df}{dx}\simeq\sum_{-N/2}^{N/2}ik\hat{f}_{k}e^{ikx}\Longrightarrow\hat{g}_{k}=ik\hat{f}_{k}.
+g(x)=\frac{df}{dx}\simeq\sum_{k=-N/2+1}^{N/2}ik\hat{f}_{k}e^{ikx}\Longrightarrow\hat{g}_{k}=ik\hat{f}_{k}.
 \]
 
 \end_inset
@@ -405,7 +496,6 @@ Fire-Atmosphere Interactions
 \begin_layout Standard
 To model the effects of buoyant updrafts we considered a DONT KNOW WHAT
  TO CALL IT.
- 
 \end_layout
 
 \begin_layout Standard
@@ -421,7 +511,7 @@ v_{Sink}(\vec{x})=-\sum_{i=1}^{N}w(\vec{y}_{i})\frac{\vec{x}-\vec{y}_{i}}{\left\
 
 \begin_layout Standard
 \begin_inset Wrap figure
-lines 17
+lines 0
 placement O
 overhang 0in
 width "55col%"
@@ -495,6 +585,7 @@ A comparison of streamlines from a HIGRAD/FIRETEC
 \begin_inset CommandInset citation
 LatexCommand cite
 key "linn1997firetec"
+literal "true"
 
 \end_inset
 
@@ -512,6 +603,13 @@ key "linn1997firetec"
  are plotted in blue.
  This figure demonstrates that with proper scaling of the convective sink
  strength a similar velocity field to a high-fidelity model can be attained.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:SinkComparison"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -556,6 +654,7 @@ ties.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "hou1994Ltheta"
+literal "true"
 
 \end_inset
 
@@ -824,7 +923,7 @@ L_{t}=-\int_{0}^{2\pi}v_{n}\theta_{\alpha'}d\alpha'\label{eq:FinalLt}
 lines 18
 placement O
 overhang 0in
-width "55col%"
+width "45col%"
 status open
 
 \begin_layout Plain Layout
@@ -902,12 +1001,20 @@ Snapshots of two moving interfaces initialized as a unit circle centered
 \begin_inset CommandInset citation
 LatexCommand cite
 key "hou1994Ltheta"
+literal "true"
 
 \end_inset
 
 .
  Notice that the right interface has the same shape as the left and keeps
  points equispaced in arclength.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:LThetaExample"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -984,7 +1091,7 @@ Could have done optimization of streamline figure to determine lamda1 and
 \end_layout
 
 \begin_layout Section
-Model Fitting
+Model Fitting with Delayed-Rejection Adaptive-Metropolis
 \end_layout
 
 \begin_layout Standard
@@ -992,25 +1099,1141 @@ In an effort to determine a limiting domain for
 \begin_inset Formula $\lambda$
 \end_inset
 
- values a Delayed-Rejection Adaptive-Metropolis Bayesian inference algorithm
+ values a Delayed-Rejection Adaptive-Metropolis (DRAM) Bayesian inference
+ algorithm
 \begin_inset CommandInset citation
 LatexCommand cite
 key "haario2006dram"
+literal "true"
 
 \end_inset
 
- was used.
- 
-\end_layout
-
-\begin_layout Standard
-The proposed model has unknown parameters that DRAM will identify.
+ was explored.
  The objective of DRAM is to start with a prescribed prior distribution
  and then sample the parameter space to determine the posterior probability
  density for each parameter.
- This is done by updating the likelihood based on the error between the
- model and data.
- The DRAM algorithm will show correlations between parameters, shortcomings
+ This is done by updating the likelihood based on a prescribed error function
+ defined by the user.
+\end_layout
+
+\begin_layout Subsection
+Adaptive Metropolis
+\end_layout
+
+\begin_layout Standard
+In a standard Metropolis algorithm your parameter space is sampled using
+ a static prior distribution.
+ In Adaptive Metropolis (AM) the covariance of the proposal distribution
+ is updated after some initial non-adaptation period, 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+, based on all of the previous states.
+ AM is important in the inference procedure since we have no prior knowledge
+ of what the prior distributions for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ are.
+ The covariance matrix for AM is defined as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+C_{t}=s_{d}\text{Cov}(X_{0},X_{1},\ldots,X_{t-1})+s_{d}\varepsilon I_{d},
+\end{equation}
+
+\end_inset
+
+ where 
+\begin_inset Formula $s_{d}$
+\end_inset
+
+ is a parameter that depends only on the dimension, 
+\shape italic
+d
+\shape default
+,
+\shape italic
+ 
+\shape default
+of the the state space where 
+\begin_inset Formula $\pi$
+\end_inset
+
+ is defined, 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+ is a constant, and 
+\begin_inset Formula $I_{d}$
+\end_inset
+
+ is the 
+\shape italic
+d
+\shape default
+ dimensional identity matrix.
+ The constant 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ is there to ensure 
+\begin_inset Formula $C_{t}$
+\end_inset
+
+ does not become singular, which is small and in practice can typically
+ be set to zero 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "haario2001adaptive"
+literal "true"
+
+\end_inset
+
+.
+ The parameter 
+\begin_inset Formula $s_{d}$
+\end_inset
+
+ was shown in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sdConf"
+literal "true"
+
+\end_inset
+
+ to optimize the mixing properties of the Metropolis search in the case
+ of Gaussian targets and Gaussian proposals when set to 
+\begin_inset Formula $s_{d}=2.4^{2}/d.$
+\end_inset
+
+ Now if we define 
+\begin_inset Formula $C_{0}$
+\end_inset
+
+ as a strictly positive definite initial covariance then we have
+\begin_inset Formula 
+\[
+C_{t}=\begin{cases}
+C_{0} & t\leq t_{0}\\
+C_{t}=s_{d}\text{Cov}(X_{0},X_{1},\ldots,X_{t-1})+s_{d}\varepsilon I_{d} & t>t_{0}
+\end{cases}.
+\]
+
+\end_inset
+
+But at this point it seems quite computationally expensive to calculate
+ the covariance each step.
+ Luckily if we first look at the definition of the empirical covariance
+ matrix for 
+\begin_inset Formula $X_{0},\ldots,X_{k}\in\mathbb{R}^{d}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\text{Cov}(X_{0},\ldots,X_{k})=\frac{1}{k}\left(\sum_{i=0}^{k}X_{i}X_{i}^{T}-(k+1)\bar{X}_{k}\bar{X}_{k}^{T}\right),
+\end{equation}
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+\bar{X}_{k}=\frac{1}{k+1}\sum_{i=0}^{k}X_{i}
+\]
+
+\end_inset
+
+with 
+\shape italic
+X 
+\shape default
+being column vectors, we can combine (1) and (2) to get
+\begin_inset Formula 
+\begin{equation}
+C_{t+1}=\frac{t-1}{t}C_{t}+\frac{s_{d}}{t}\left(t\bar{X}_{t-1}\bar{X}_{t-1}^{T}-(t+1)\bar{X}_{t}\bar{X}_{t}^{T}+X_{t}X_{t}^{T}+\varepsilon I_{d}\right).
+\end{equation}
+
+\end_inset
+
+So it's clear that we can update 
+\begin_inset Formula $C_{t}$
+\end_inset
+
+ quite easily and the seemingly computationally expensive term, 
+\begin_inset Formula $\bar{X_{t}},$
+\end_inset
+
+ follows the simple recursion relation 
+\begin_inset Formula $\bar{X}_{t}=\frac{t+1}{t}\bar{X}_{t-1}+\frac{1}{t+1}X_{t}.$
+\end_inset
+
+ This adaptation seems as though it would remove ergodicity, but, was proven
+ from first principles in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "haario2001adaptive"
+literal "true"
+
+\end_inset
+
+ to be ergodic.
+\end_layout
+
+\begin_layout Standard
+With 
+\begin_inset Formula $C_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+, and 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ have defined at initialization adaptation in the Metropolis algorithm is
+ achieved.
+ AM provides one way of improving the naive Metropolis method to handle
+ tougher distributions to sample that might have issues converging.
+\end_layout
+
+\begin_layout Subsection
+Delayed Rejection
+\end_layout
+
+\begin_layout Standard
+With very little prior knowledge on the scale of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ parameters the initial guess for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is most likely a poor one.
+ This may lead to very slow convergence to a stationary distribution even
+ with AM implemented.
+ In Delayed Rejection (DR) an alternative move is proposed upon rejection
+ that is not only dependent on the current state but also the rejected proposal.
+ In the Metropolis algorithm a candidate move 
+\begin_inset Formula $Y_{1}$
+\end_inset
+
+ is generated from a proposal 
+\begin_inset Formula $q_{1}(X|\cdot)$
+\end_inset
+
+and accepted with probability
+\begin_inset Formula 
+\[
+\alpha_{1}(X|Y_{1})=\min\left(1,\frac{\pi(Y_{1})q_{1}(Y_{1}|X)}{\pi(X)q_{1}(X|Y_{1})}\right)=\min\left(1,\frac{N_{1}}{D_{1}}\right).
+\]
+
+\end_inset
+
+ When rejected, instead of 
+\begin_inset Formula $X_{t+1}=X$
+\end_inset
+
+, a second move, 
+\begin_inset Formula $Y_{2}$
+\end_inset
+
+, is proposed which is allowed to depend not only on 
+\begin_inset Formula $X$
+\end_inset
+
+ but 
+\begin_inset Formula $Y_{1}$
+\end_inset
+
+ as well.
+ The accepted probability is calculated so that reversibility with 
+\begin_inset Formula $\pi$
+\end_inset
+
+ is preserved separately at each stage.
+ This allows for delayed rejection to be interrupted at any stage.
+ The probabilty for the second stage has the form
+\begin_inset Formula 
+\[
+\alpha_{2}(X|Y_{1},Y_{2})=\min\left(1,\frac{\pi(Y_{2})q_{1}(Y_{2}|Y_{1})q_{2}(Y_{2}|Y_{1},X)[1-\alpha_{1}(Y_{2}|Y_{1})]}{\pi(X)q_{1}(X|Y_{1})q_{2}(X|Y_{1},Y_{2})[1-\alpha_{1}(X|Y_{1})]}\right)=\min\left(1,\frac{N_{2}}{D_{2}}\right).
+\]
+
+\end_inset
+
+We can continue this process and we get an iterative expression of 
+\begin_inset Formula 
+\[
+\alpha_{i}(X|Y_{1},\cdots,Y_{i})=\min\Big(1,\Big\{\frac{\pi(Y_{i})q_{1}(Y_{i}|Y_{i-1})q_{2}(Y_{i}|Y_{i-1},Y_{i-2})\cdots q_{i}(Y_{i}|Y_{i-1},\cdots,X)}{\pi(X)q_{1}(X|Y_{1})q_{2}(X|Y_{1},Y_{2})\cdots q_{i}(X|Y_{1},\cdots,Y_{i})}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{[1-\alpha_{1}(Y_{i}|Y_{i-1})][1-\alpha_{2}(Y_{i}|Y_{i-1},Y_{i-2})]\cdots[1-\alpha_{i-1}(Y_{i}|Y_{i-1},\cdots,Y_{1})]}{[1-\alpha_{1}(X|Y_{1})][1-\alpha_{2}(X|Y_{1},Y_{2})]\cdots[1-\alpha_{i-1}(X|Y_{1},Y_{2},\cdots,Y_{i-1})]}\Big\}\Big)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+=\min\left(1,\frac{N_{i}}{D_{i}}\right).
+\]
+
+\end_inset
+
+ This is an ugly expression, but a small simplification can be made to form
+ a recursive formula.
+ If the 
+\begin_inset Formula $i$
+\end_inset
+
+th stage is reached then we know 
+\begin_inset Formula $N_{j}<D_{j}$
+\end_inset
+
+ for 
+\begin_inset Formula $j=1,\cdots,i-1$
+\end_inset
+
+ therefore 
+\begin_inset Formula $\alpha_{j}(X|Y_{1},\cdots,Y_{j})$
+\end_inset
+
+ can be rewritten as 
+\begin_inset Formula $\frac{N_{j}}{D_{j}}$
+\end_inset
+
+ for 
+\begin_inset Formula $j=1,\cdots,i-1$
+\end_inset
+
+.
+ This lets us express 
+\begin_inset Formula $D_{i}$
+\end_inset
+
+ with the recursive formula 
+\begin_inset Formula 
+\[
+D_{i}=q_{i}(X|Y_{1},Y_{2},\cdots,Y_{i})(D_{i-1}-N_{i-1})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=q_{i}(X|Y_{1},Y_{2},\cdots,Y_{i})[q_{i-1}(X|Y_{1},Y_{2},\cdots,Y_{i-1})[q_{i-2}(X|Y_{1},Y_{2},\cdots,Y_{i-2})\cdots
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+[q_{2}(X|Y_{1},Y_{2})[q_{1}(X|Y_{1})\pi(X)-N_{1}]-N_{2}]\cdots-N_{i-1}].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement R
+overhang 0in
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width ""
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/DelayedRejection.png
+	lyxscale 30
+	width 40page%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+small
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagram of the DR algorithm.
+ Proposals 
+\begin_inset Formula $Y_{1},\,Y_{2},\,\text{and}\,Y_{3}$
+\end_inset
+
+ were rejected with 
+\begin_inset Formula $Y_{4}$
+\end_inset
+
+ satisfying the acceptance criteria and being accepted.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:DelayedRejectionDiag"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The amount of times rejection is delayed is up to the user so we can decide
+ to try at most 4 proposals otherwise let the chain stay where it is.
+ Above is a diagram of what that process might look like if thr 
+\begin_inset Formula $4^{th}$
+\end_inset
+
+ proposal was accepted.
+ An alternative is to have a prescribed probability 
+\shape italic
+p
+\shape default
+ of upon rejection moving to a higher stage proposal.
+ In 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tierney1999some"
+literal "true"
+
+\end_inset
+
+ DR was proved to outperform standard Metropolis-Hastings(MH) in the Peskan
+ absolute efficiency ordering.
+ This means that DR obtains MCMC estimators that have a smaller asymptotic
+ variance for every function 
+\shape italic
+f
+\shape default
+ whose expectation relative to 
+\begin_inset Formula $\pi$
+\end_inset
+
+ we want to estimate (provided 
+\shape italic
+f
+\shape default
+ has finite variance under 
+\begin_inset Formula $\pi$
+\end_inset
+
+)
+\begin_inset CommandInset citation
+LatexCommand cite
+key "haario2006dram"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Both DR and AM are standalone modifications made to MCMC methods but complement
+ eachother well.
+ Putting these two together was shown to retain ergodicity in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "haario2006dram"
+literal "true"
+
+\end_inset
+
+ with some restrictions.
+ Combining the two (DRAM) is simple, allow the covariance for AM to be calculate
+d with the DR result.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/HaarioMHAM.png
+	lyxscale 20
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figures/HaarioDRDRAM.png
+	lyxscale 20
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Results from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "haario2006dram"
+literal "true"
+
+\end_inset
+
+ that show the how the combination of DR and AM can outperform MH, DRMH,
+ and AMH on their own.
+ These figures show DRAMs superior sampling versus when using a proposal
+ with too small of a variance.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HaarioExample"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It's clear to see that DRAM samples the proposal well in the example shown
+ in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:HaarioExample"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, especially against MH and DRMH.
+ For another demonstration consider noisy data measurements damped harmonic
+ oscillator.
+ We know the equation of a damped harmonic oscillator is 
+\begin_inset Formula 
+\[
+u(t)=e^{-\gamma t}U_{0}\cos(\omega t)
+\]
+
+\end_inset
+
+ where 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ is the damping coefficient, 
+\begin_inset Formula $U_{0}$
+\end_inset
+
+ is the initial displacement, and 
+\begin_inset Formula $\omega$
+\end_inset
+
+ is the angular speed.
+ So we expect the data to fit this form so we can use Bayesian Inference
+ using true values, which were used to form the data with some added Gaussian
+ noise, and the inferred parameters, 
+\begin_inset Formula $\gamma_{i}',U_{0,i}',\omega_{i}'$
+\end_inset
+
+ at a given step to calculate an error to form the likelihood and make the
+ next proposal.
+ To test all of these methods I used a code 'MCMC toolbox' based on 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "haario2006dram,haario2001adaptive"
+literal "true"
+
+\end_inset
+
+ which can be found at 'http://helios.fmi.fi/~lainema/mcmc'.
+ Like the example above I supply reasonable variances to both the 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ and 
+\begin_inset Formula $U_{0}$
+\end_inset
+
+ proposals but I assign a very small variance to the 
+\begin_inset Formula $\omega$
+\end_inset
+
+ proposal distribution.
+ This means that many proposals are rejected due to 
+\begin_inset Formula $\omega$
+\end_inset
+
+ not being able to make large enough jumps when a new set of parameters
+ is sampled.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+True
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Initialized
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\gamma$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $U_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16.7
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\omega$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Not only is the variance of 
+\begin_inset Formula $\omega$
+\end_inset
+
+ restricted greatly, but, we'll start with very poor initial values for
+ the parameters to see if their is any difference between the methods in
+ locating the distribution we are after.
+ For each of the methods used 10,000 samples will be taken and MH was the
+ underlying Metropolis sampling algorithm used that DR and AM was applied
+ to.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="4">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="middle" width="1.5cm">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sampling Method
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sampling Paths
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Chains
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Marginals
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MH
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/mhMarg.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/mhChain.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/mhDist.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+AM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/amMarg.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/amChain.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/amDist.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DR
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/drmarg.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/drChain.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/drmarg.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DRAM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/dramMarg.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/dramChain.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figures/dramDist.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From the plots we can see that both MH and AM have long chains of rejection.
+ This is not an issue for DR and DRAM and we get good mixing for these two.
+ From these two examples we can see that when we have a poor proposal, DR
+ and AM can tune our sampling, but, in the second example AM's covariance
+ could not adapt to become large enough for good mixing.
+ Although, near the end of the AM run it seems as though AM's adaptation
+ began to show its effects and better mixing is seen.
+\end_layout
+
+\begin_layout Standard
+Even though these examples are quite contrived, there is still great utility
+ in DRAM.
+ Only the variance of 
+\begin_inset Formula $\omega$
+\end_inset
+
+ was greatly limited yet strings of rejection were seen in all parameters
+ of MH and AM.
+ Imagine a high dimensional system that you wanted to perform Bayesian Inference
+ on.
+ If there is a parameter that you have a poor approximation for it's variance,
+ then your acceptance of most of the other paramters will be restricted
+ if everything is coupled.
+ Identifying which parameter has too limiting of a variance could be like
+ finding a needle in a haystack.
+ DRAM keeps this from happening, and also with enough time the adaptation
+ will give you a better approximation for the variance you should be using
+ in your proposals.
+\end_layout
+
+\begin_layout Standard
+HERE
+\end_layout
+
+\begin_layout Standard
+The DRAM algorithm will show correlations between parameters, shortcomings
  of the model, and quantify uncertainty.
  DRAM requires analysis of results and reinitialization to attain good stationar
 y posterior distributions.
@@ -1019,7 +2242,6 @@ y posterior distributions.
  and my previous experiences with HPC will prove useful.
  In addition, the computational efficiency of this model makes it a natural
  fit for DRAM.
- 
 \end_layout
 
 \begin_layout Standard
@@ -1028,6 +2250,7 @@ The error that was used for driving the model took three points from a head
 \begin_inset CommandInset citation
 LatexCommand cite
 key "canfield2014numerical"
+literal "true"
 
 \end_inset
 
@@ -1037,14 +2260,30 @@ key "canfield2014numerical"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "canfield2014numerical"
+literal "true"
 
 \end_inset
 
  with a backing wind of 5 m/s in the positive x-direction.
- The points used for the error were
-\end_layout
+ The values used to form the error function are shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:DRAMpoints"
+plural "false"
+caps "false"
+noprefix "false"
 
-\begin_layout Standard
+\end_inset
+
+.
+\begin_inset Wrap table
+lines 0
+placement o
+overhang 0in
+width "30col%"
+status open
+
+\begin_layout Plain Layout
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="4" columns="2">
@@ -1138,15 +2377,42 @@ y
 
 \end_layout
 
-\begin_layout Standard
-with the * being a free x value.
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error points used for error function with the * being a free x value.
  Once a simulation was completed the min and max x values and max y values
  were taken and compared with the three points above.
- Since the initial fire line was initialized with its center being on the
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:DRAMpoints"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since the initial fire line was initialized with its center being on the
  x-axis with a background wind only in the x-direction the developing fireline
  would be symmetric with respect to the x-axis as well as not drift upward.
  This means that these points were a consistent error measurement.
- 
 \end_layout
 
 \begin_layout Standard
@@ -1189,7 +2455,7 @@ n? Another layer of difficulty is the fact that this code is written in
 \end_layout
 
 \begin_layout Standard
-RESULTS
+NEED BETTER RESULTS
 \end_layout
 
 \begin_layout Standard
@@ -1244,7 +2510,8 @@ for the bottom region.
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "C:/Users/David/References"
+btprint "btPrintCited"
+bibfiles "/home/djr16/References"
 options "plain"
 
 \end_inset
